@@ -1,0 +1,8 @@
+<h1>{{title}}</h1>
+
+<ul>
+    <!-- These properties in angular are case sensitive. 
+        Though you have defined your entity as 'UserName' in API, angular gets the response with the property as 'userName' in camel case -->
+        <!-- Here ngFor is a structural directive and 'let user of users' is an expression -->
+<li *ngFor = 'let user of users'>{{user.id}} - {{user.userName}}</li>
+</ul>
