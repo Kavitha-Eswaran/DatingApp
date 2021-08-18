@@ -7,9 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    // [ApiController]
+    // [Route("[controller]")]
+     //Section4: 
+    // To avoid defining the above attributes in all controller files, created a common controller file.
+    // Moved the above two attributes [ApiController], [Route] to BaseApiController file 
+    // and inherting it from this BaseApiController controller instead of ControllerBase here. 
+    public class WeatherForecastController : BaseApiController
     {
         private static readonly string[] Summaries = new[]
         {
