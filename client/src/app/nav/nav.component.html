@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <div id="container"></div>
+    <a class="navbar-brand" href="#">Dating App</a>
+    <!-- We are using the angular structural directive ngIf to make this ul block visible 
+      only when the condition is true. And what we've also achieved by using this async pipe, remember, is that 
+      we automatically unsubscribe if our NAV component is no longer visible or in use.-->
+    <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Lists</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Messages</a>
+      </li>
+      <!-- We can remove this temporary button as we got the login state persistence working now  -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li> -->
+    </ul>
+    <!-- Here we have added the dropdown builtin directive in the div which has the class dropdown.
+    So anything has been written as a single keyword on the tags(without any assignment to that), indicates that it is a directive -->
+    <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
+      <!-- Here we have added the dropdownToggle builtin directive in the tag which has the class dropdown-toggle -->
+      <a class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+      <!-- Here we have added the dropdownMenu builtin structural directive in the div which has the class dropdown-menu.
+      mt-3 is a bootstrap class defining marigin top property with its value. -->
+      <div class="dropdown-menu mt-3" *dropdownMenu>
+        <a class="dropdown-item">Edit Profile</a>
+        <!-- Just added a divider/horizontal line between the items -->
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+
+    <!-- Here our form name is loginForm and we're going to set this equal to ngForm which means that
+    the below form is an angular form. Angular form provides a method ngSubmit to submit the data.
+    On ngSubmit we are calling the login method created in our component.
+    This ngSubmit method is getting called when we are clicking the submit type button created with in the form.
+    If we want to just hide this form then we can use [hidden] property but when we use this structural directive
+    *ngIf then this form is not just going to exist at all.
+  We can use ! (not) operator like !loggedIn (bool variable), but we canot use ! with the observable variable.
+So we have to check the null condition of the observable using === -->
+    <form #loginForm="ngForm" *ngIf="(accountService.currentUser$ | async) === null" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()"
+      autocomplete="off">
+      <!-- ‘a-ngModel’ (angular snippet for two-way binding) gives us the structure of what we need for two-way binding. 
+        we've got the square brackets and then we've got parentheses inside it and 
+        the square brackets are typically used for receiving from our components 
+        and the parentheses are used when data goes the other way. -->
+      <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2" type="text"
+        placeholder="Username">
+      <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password"
+        placeholder="Password">
+
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+    </form>
+  </div>
+
+</nav>

@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <div *ngIf="!registerMode" style="text-align: center;">
+        <h1>Find your match</h1>
+        <p class="lead">Come on in to view your matches... all you need to do is sign up!</p>
+        <div class="text-center">
+            <!-- we'll just add a click event. so any data goes to a component is in parentheses.-->
+            <button (click) = "registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
+            <button class="btn btn-info btn-lg">Learn more</button>
+        </div>
+    </div>
+
+    <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <!-- we are setting the input property created in the register component (child)
+                     using the users property created in home component (parent). 
+                    When we are receiving data from parent that goes in [].
+                when we're sending data from a child, this goes in parentheses () as it's an output. -->
+                <!-- <app-register [usersFromHomeComponent] = "users" (cancelRegister) = "cancelRegisterMode($event)"></app-register> -->
+                
+                <app-register (cancelRegister) = "cancelRegisterMode($event)"></app-register>
+            </div>
+        </div>
+
+    </div>
+</div>

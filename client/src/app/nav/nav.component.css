@@ -1,0 +1,4 @@
+/* This is to change the cursor to hand on hovering the menu and it's items */
+.dropdown-toggle, .dropdown-item{
+    cursor:pointer;
+}
