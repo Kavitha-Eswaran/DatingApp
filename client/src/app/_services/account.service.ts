@@ -25,11 +25,13 @@ export class AccountService {
   baseUrl = 'https://localhost:5001/api/';
 
   //ReplaySubject is a kind of buffer object is going to store the values inside here.
-  //And any time a subscriber subscribes to this observable, it's going to omit the last value inside it,
-  //or however many values inside it that we want to admit.
+  //And any time a subscriber subscribes to this observable, it's going to omit the last value inside it, or however many values inside it that we want to admit.
   //Here we're going to store User inside this replay subject and How many versions of the current user are we going to store
   // it's just a user object for the current user, so we only need one of them. so bufferzise is set as 1.
   //typescript became stricter. so we have to mention it explicitly as below " | null" when we need our observable accepting nulls.
+   //The reason we set up this ReplaySubject as an observable is, so that this can be observed by other components or other classes in our application. And whenever something subscribes to this, then it's going to be notified if anything changes.
+   //Now, this is the reason for using this particular observable in the first place. AuthGuard is able to subscribe to this.
+   //when we use AuthGuard, it automatically subscribes to any observables. We don't need to specifically subscribe to this current user observable in here because the authGuard is automatically going to do this when we try and access this particular property.
   private currentUserSource = new ReplaySubject<User | null>(1)
 
   //As this is going to be an observable we give it the dollar sign at the end.
