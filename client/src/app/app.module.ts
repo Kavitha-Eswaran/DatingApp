@@ -18,6 +18,7 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './_modules/shared.module';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 
 //Here we have NgModule decorator with meta data.
 @NgModule({
@@ -29,7 +30,8 @@ import { SharedModule } from './_modules/shared.module';
     MemberListComponent,
     MemberDetailComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    TestErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { SharedModule } from './_modules/shared.module';
     TooltipModule.forRoot(),
     BrowserAnimationsModule,
     FormsModule,
+    //So now everything in the shared module is going to be available via our app module to our components in our application.
     SharedModule
   ],
 // forRoot() means that it's got some services or components that it needs to initialize along with the root module.

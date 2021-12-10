@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
@@ -32,7 +33,8 @@ const routes: Routes = [
       { path: 'messages', component: MessagesComponent }
     ]
   },
-
+  //Keeping this error component outside as we don't want this to be hidden under the children. We want to test the authentication response as well.
+  { path: 'errors', component: TestErrorsComponent },
   //The path-matching strategy, one of 'prefix' or 'full'. Default is 'prefix'.
 
   //By default, the router checks URL elements from the left to see if the URL matches 

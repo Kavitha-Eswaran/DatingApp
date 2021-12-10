@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Extensions;
 using API.Interfaces;
+using API.Middleware;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -101,11 +102,15 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // If we are in development environment mode and our application encounters any problem, 
-            //then we use the developer exception page  
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //then we use the developer exception page.
+            //This exception handling middleware always comes at the top of our middleware container, because if an exception happens anywhere else in the middleware or as part of our request, then it gets thrown up to the next level of exception handling. Now, if we don't have any exception handling inside any of our methods, controllers or middleware, then it's going to get thrown all the way up to our developer exception page.
+            //If we comment this developer exception page usage and no where the exception is handled (method/controller level), then we will not get any error detailed information like actual error message, file name & line no etc. Instead that we could see only the error code will be returned to our application. To overcome this, we created our own exception middleware and using it here.
+            // if (env.IsDevelopment())
+            // {
+            //     app.UseDeveloperExceptionPage();
+            // }
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             //if we hit the http url, then we will get redirected to https url.
             app.UseHttpsRedirection();
             //Routing is an action because we are able to go from browser the weatherforecast endpoint 
