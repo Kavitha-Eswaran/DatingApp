@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
@@ -27,14 +29,16 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'members', component: MemberListComponent },
+      { path: 'members', component: MemberListComponent, canActivate: [AuthGuard]},
       { path: 'members/:id', component: MemberDetailComponent },
       { path: 'lists', component: ListsComponent },
-      { path: 'messages', component: MessagesComponent }
+      { path: 'messages', component: MessagesComponent },
     ]
   },
   //Keeping this error component outside as we don't want this to be hidden under the children. We want to test the authentication response as well.
   { path: 'errors', component: TestErrorsComponent },
+  { path: 'not-found', component: NotFoundComponent },
+  {path: 'server-error', component: ServerErrorComponent},
   //The path-matching strategy, one of 'prefix' or 'full'. Default is 'prefix'.
 
   //By default, the router checks URL elements from the left to see if the URL matches 
@@ -46,7 +50,7 @@ const routes: Routes = [
 
   //The path-match strategy 'full' matches against the entire URL. It is important to do this when redirecting empty-path routes.
   //Otherwise, because an empty path is a prefix of any URL, the router would apply the redirect even when navigating to the redirect destination, creating an endless loop.
-  { path: '**', component: HomeComponent, pathMatch: 'full' }
+  { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

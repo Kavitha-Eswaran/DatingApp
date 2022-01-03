@@ -33,9 +33,6 @@ export class NavComponent implements OnInit {
     // and just setting a bool variable as true. 
     this.accountService.login(this.model).subscribe(response => {
      this.router.navigateByUrl('/members');
-    }, error => {
-    console.log(error);
-    this.toastr.error(error.error);    
     });
   }
 
